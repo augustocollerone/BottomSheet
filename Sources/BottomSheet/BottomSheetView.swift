@@ -55,13 +55,12 @@ internal struct BottomSheetView<hContent: View, mContent: View, bottomSheetPosit
             }
             VStack(spacing: 0) {
                 if !self.options.notResizeable && !self.options.noDragIndicator {
-                    Button(action: self.switchPositionIndicator, label: {
-                        Capsule()
-                            .fill(self.options.dragIndicatorColor)
-                            .frame(width: 36, height: 5)
-                            .padding(.top, 5)
-                            .padding(.bottom, 7)
-                    })
+                    Capsule()
+                        .fill(self.options.dragIndicatorColor)
+                        .frame(width: 36, height: 5)
+                        .padding(.top, 5)
+                        .padding(.bottom, 7)
+                        .onTapGesture(perform: self.switchPositionIndicator())
                 }
                 if self.headerContent != nil || self.options.showCloseButton {
                     HStack(alignment: .top, spacing: 0) {
