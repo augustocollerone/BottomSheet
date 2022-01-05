@@ -61,6 +61,24 @@ internal struct BottomSheetView<hContent: View, mContent: View, bottomSheetPosit
                         .padding(.top, 5)
                         .padding(.bottom, 7)
                         .onTapGesture(perform: self.switchPositionIndicator)
+                        .gesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    withAnimation(self.options.animation) {
+                                        if !self.options.notResizeable {
+                                            self.translation = value.translation.height
+                                            
+                                            self.endEditing()
+                                        }
+                                    }
+                                }
+                                .onEnded { value in
+                                    if !self.options.notResizeable {
+                                        let height: CGFloat = value.translation.height / geometry.size.height
+                                        self.switchPosition(with: height)
+                                    }
+                                }
+                        )
                 }
                 if self.headerContent != nil || self.options.showCloseButton {
                     HStack(alignment: .top, spacing: 0) {
